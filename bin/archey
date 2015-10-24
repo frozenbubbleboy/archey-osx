@@ -51,7 +51,7 @@ uptime=$(uptime | sed -e 's/.*up \{1,\}//' -e 's/, [0-9]\{1,\} users.*//')
 shell="$SHELL"
 terminal="$TERM ${TERM_PROGRAM//_/ }"
 cpu=$(sysctl -n machdep.cpu.brand_string)
-battery=$(ioreg -l | grep -i capacity | tr '\n' ' | ' | awk '{printf("%.2f%%", $10/$5 * 100)}')
+battery=$(ioreg -l -r -c AppleSmartBattery | grep -i capacity | tr '\n' ' ' | awk '{printf("%.2f%%", $6/$3 * 100)}')
 
 # removes (R) and (TM) from the CPU name so it fits in a standard 80 window
 cpu=$(echo "$cpu" | awk '$1=$1' | sed 's/([A-Z]\{1,2\})//g')
